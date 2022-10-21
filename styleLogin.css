@@ -1,0 +1,158 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card
+{
+    margin: auto;
+    box-shadow: -4px -4px 15px rgba(255,255, 255, 1),
+    4px 4px 15px rgba(0,0,0,0.1);
+    padding: 50px 50px;
+    border-radius: 40px;
+    background: #ecf0f3;
+    top: 0px;
+    bottom:0;
+    left: 0;
+    right: 0;  
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ecf0f3;
+}
+div,p{
+    color: #babecc;
+    text-shadow: 1px 1px 1px #fff ;
+}
+
+p{
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 800;
+    font-size: 16px;
+
+}
+
+.login-form{
+    background: #ecf0f3;
+    /* padding:40px;
+    border-radius: 12px; */
+    width: 350px;
+    height:auto;
+    /* box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+    -6px -6px 10px -1px rgba(0,0,0,0.15); */
+}
+
+.form-title{
+    text-align: center;
+    padding: 25px 0;
+}
+label{
+    display: block;
+    margin-bottom: 24px;
+    width: 100%;
+}
+input{
+    margin-right: 8px;
+    box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #fff;
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;  
+}
+input{
+    color: #f4541c;
+}
+button,input{
+    border: 0;
+    outline: 0;
+    font-size: 14px;
+    border-radius: 320px;
+    padding: 16px;
+    background: #ecf0f3;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+input:focus{
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px 1px 2px #fff;
+}
+
+button{
+    letter-spacing: 2px;
+    color: #61677c;
+    font-weight: bold;
+    box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+}
+
+button:hover{
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+}
+
+button:active{
+    box-shadow: inset 1px 1px 2px #babecc, -1px -1px 2px #fff;
+}
+
+.red{
+    display: block;
+    width: 100%;
+    color: #f4541c;
+}
+
+
+.circle
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;;
+    background: #f4541c;
+    clip-path: circle(200px at right 500px);
+    /* widows: -5px -5px 20px #fff, 5px 5px 20px #babecc; */
+}
+
+.circle2
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;;
+    background: #f4541c;
+    clip-path: circle(300px at left 100px);
+}
+
+
+.circle3
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;;
+    background: #f4541c;
+    clip-path: circle(200px at left 900px);
+}
+
+
+.circle4
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;;
+    background: #f4541c;
+    clip-path: circle(100px at right 10px);
+}

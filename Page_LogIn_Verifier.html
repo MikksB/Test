@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    //Getting the ID
+    function stuffGetter(param)
+    {
+        const paramString = window.location.search;
+
+        const urlParams = new URLSearchParams(paramString);
+
+        return urlParams.get(param);
+    }
+
+    function stuffWriter(eleID, param)
+    {
+        document.getElementById(eleID).innerHTML = stuffGetter(param);
+    }
+
+    var un = stuffGetter("un");
+    var pw = stuffGetter("pw");
+
+    var xmlhttp = new XMLHttpRequest(); 
+    xmlhttp.onreadystatechange = function()
+     {
+        if (this.readyState == 4 && this.status == 200) 
+         {
+            myObj = JSON.parse(this.responseText);
+            var output = "";
+            //alert(un);
+            for( var key of Object.keys(myObj))
+             {  
+                if(myObj[key]["UserID"] == un && myObj[key]["Password"] == pw)
+                {
+                    // alert("Sucessfully Signed In");
+                    Cookies.set('User', un, { expires: 2 });
+                    window.location="Page_Home.html";
+                    break;
+                } 
+                else{
+                    alert("Please check your user id and password");
+                    // swal({
+                    //     title: "SAVE!",
+                    //     text: "Succesfully added a new product!",
+                    //     icon: "success",
+                    //     });    
+                        
+                    window.location="Page_LogIn.html";
+                                   
+                }
+             }
+         }
+     };
+     xmlhttp.open("GET", "PHP_Users.php", true); // this is to set the command to run
+     xmlhttp.send(); 
+
+</script>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sign In</title>
+        <meta charset ="UTF-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="styleLogin.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+        h1{
+            font-weight: normal;
+            font-size: 30px;
+            letter-spacing: 4px;
+            margin-bottom:0.5ch;
+            color: #f4541c;
+            text-align: center;
+        }
+        h4{
+            margin-bottom: 1ch;
+            text-align: center;
+        }
+        ::placeholder{
+            font-size: 14px;
+            color:#f4541c;
+        }
+        .fp{
+            font-size: 14px;
+            margin-top: 1ch;
+            margin-left: 220px;
+        }
+    </style>
+    </head>
+    <script>
+        function stuffGetter(param)
+        {
+            const paramString = window.location.search;
+            //alert(paramString);
+    
+            const urlParams = new URLSearchParams(paramString);
+    
+            return urlParams.get(param);
+        }
+    
+        function stuffWriter(eleID, param)
+        {
+            document.getElementById(eleID).innerHTML = stuffGetter(param);
+        }
+    </script>
+    <body>
+        <div class="circle"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+        <div class="card">
+            <div class= "login-form" > 
+                <center>
+                    <img src="JCOLogo.png" style="width: 50%; margin-bottom:3ch;">
+                </center>
+                
+                <!-- <div class="form-title">
+                    <h1>WELCOME BACK</h1>
+                    <h4>Log back into your account </h4>
+                </div> -->
+                <form action="/JCOPOS/Page_LogIn_Verifier.html">
+                <label>
+                    <i class="fa fa-id-card-o"> | User ID</i>
+                    <input type="text"  placeholder = "e.g. 18-0190A" name = "un" id="un"></label>
+                <label> 
+                    <i class="fa fa-key"></i> | Password
+                    <input type="password" placeholder = "********" name = "pw" id="pw">
+                    <div class="fp">Forgot password?</div>
+                </label>     
+                <!-- <button class="red" onClick="window.location.href='http://localhost//Project/Finals/Main_Menu.html#';" type="button"><i class="fa fa-lock" ></i> SIGN IN</button>  -->
+                <button class="red" value="Login" style="width:100%">SIGN IN</button>
+            </form>  
+            </div> 
+        </div>
+
+
+        <!-- <script>
+            // function CallVeri(){
+            //     var un = document.getElementById("un").value;
+            //     var pw = document.getElementById("pw").value;
+            //     window.location = "LogIn_Verifier.html?un=" + un +"&pw="+pw;
+            // }
+            // this line checks if the err parameter exists in the url
+            if(stuffGetter("err") != null)
+            {                        
+                // checks the value of the err parameter in the url    
+                switch(stuffGetter("err"))
+                {
+                    case "1": // error code 1 is invalid login
+                        document.getElementById("err").innerHTML = "Username and/or password is invalid";
+                        break;
+                }
+            }
+        </script> -->
+    </body>
+</html>
+

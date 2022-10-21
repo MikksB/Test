@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Our Menu</title>
+        <link rel="stylesheet" href="StyleHome.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    </head>
+    <body>
+        <section>
+            <header>
+                <a href="/JCOPOS/Page_Home.html" class="logo"><img src="JCOLogo.png" class="logo"></a>
+                <ul class="head">
+                    <li><a href="/JCOPOS/Page_Home.html">Home</a></li>
+                    <li><a href="/JCOPOS/Page_OurMenu.html">Our Menu</a></li>
+                    <li><a href="/JCOPOS/Page_PlaceOrder.html">Current Order</a></li>    
+                    <li><a href="/JCOPOS/Page_CompletedOrders.html">Completed Orders</a></li>
+                    <li><a href="/JCOPOS/Page_ManageEmployee.html">Users</a></li>
+                </ul>
+                <div class="cornerR">
+                    <a  onclick="GoProfile()" ><button class="profile"><i class="fa fa-user-circle-o"></i> PROFILE</button></a>
+                    <a onclick="remove()"><button class="signout">SIGN OUT  <i class="fa fa-sign-out"></i></button></a>
+                </div>
+            </header>
+        <div class="circle"></div>
+        <div class="circle2"></div>
+            <div class="content">
+                <div class="textBox">
+                    <h2>Take a bite for a <br>GLAZZIER <span>SMILE</span></h2>
+                    <p>We’ve got exceptionally handcrafted donuts, 
+                        premium sourced Arabica coffee, and other crave-inducing treats 
+                        prepared just for our customers.</p>
+                    <a href="/JCOPOS/Page_PlaceOrder.html"><button class="order">NEW ORDER</button></a>
+                </div>
+                <div class="imgBox">
+                    <img src="JCODonuts2.png" class="Jco">
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+<script>   
+
+     if(document.cookie.indexOf("User") < 0){
+        alert("Cookies must be enabled in your browser. Log in using your account first.");
+        window.location="Page_LogIn.html";
+    }
+    
+    function GoProfile(){
+        window.location="/JCOPOS/Page_Profile.html";
+    }
+
+    function remove(){
+        Cookies.remove('User');
+        window.location="Page_LogIn.html";
+    }
+</script>

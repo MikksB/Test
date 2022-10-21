@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Place Order</title>
+        <link rel="stylesheet" href="stylePlaceOrder3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <script src="https://kit.fontawesome.com/5112b0baa8.js" crossorigin="anonymous"></script>
+ 
+
+    </head>
+    <body>
+        <section>
+            <header>
+                <a href="/JCOPOS/Page_Home.html" class="logo"><img src="JCOLogo.png" class="logo"></a>
+                <ul class="head">
+                    <li><a href="/JCOPOS/Page_Home.html">Home</a></li>
+                    <li><a href="/JCOPOS/Page_OurMenu.html">Our Menu</a></li>
+                    <li><a href="/JCOPOS/Page_PlaceOrder.html">Current Order</a></li>    
+                    <li><a href="/JCOPOS/Page_CompletedOrders.html">Completed Orders</a></li>
+                    <li><a href="/JCOPOS/Page_ManageEmployee.html">Users</a></li>
+                </ul>
+                <div class="cornerR">
+                    <a  onclick="GoProfile()" ><button class="profile"><i class="fa fa-user-circle-o"></i> PROFILE</button></a>
+                    <a onclick="remove()"><button class="signout">SIGN OUT  <i class="fa fa-sign-out"></i></button></a>
+                </div>
+            </header>
+        </section>
+        <!-- <div class="circle"></div>
+        <div class="circle2"></div> -->   
+        <center>
+            <div class="cardtitle">
+                <h1>CURRENT <span>ORDER</span></h1>
+                <hr class="divider"></hr>
+            </div>
+           
+        </center>
+        
+        <div class="all2">
+        <div class="left">
+        <div class="allcontent">
+        
+            <input class="s" type="text" Placeholder= "Search Something" id="Srch">
+            <button class="search" value="Searched" type="button" onclick="return SrchCall()"> <i class="fa fa-search"></i></button>
+            <center>
+                <ul class="thumb">
+                    <li id="Cat" value="1" onclick="CategoryCall()"><img  src="JPackage.png"><h3>Package</h3></li>
+                    <li id="Cat3" value="3" onclick="CategoryCall3()"><img  src="JCoffee.png"><h3>J.Coffee</h3></li>
+                    <li id="Cat4" value="4" onclick="CategoryCall4()"><img  src="JCool.png"><h3>J.Cool</h3></li>
+                    <li id="Cat2" value="2" onclick="CategoryCall2()"><img  src="JClub.png"><h3>J.Club</h3></li>
+                </ul>
+                <div class="box" id="demo">
+                <!-- <ul>  -->
+                    <!-- <li>
+                        <span>1</span>
+                        <span>Half Dozen</span>
+                        <span>6 of your choice</span>
+                        <span>1</span>
+                        <span>P270</span>
+                    </li>      -->
+                </ul> 
+            </div>
+            <button class="search" id="request" value="Show More" type="button" onclick="makeRequest()"> See More <i class="fas fa-chevron-circle-down"></i> </button>
+            </center>
+        </div>
+        </div>
+        <div class="right">
+            <div class="card">
+            <div class="cardcontent">
+                <!-- <p>Date and Time:</p>
+                <p>Order Status: Preparing</p>
+                <p>User ID: </p> -->
+                <h1>List of Items</h1>
+                <!-- <table id="list">
+
+                </table> -->
+
+                <div class="box2" id="output">
+            
+                </div>
+
+                <!-- <h1>Total Qty:</h1>
+                <h1><span>Total Amount:</span></h1> -->
+                
+            </div>
+            </div>
+        </div>
+        </div>
+    </body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+<script>   
+
+     if(document.cookie.indexOf("User") < 0){
+        alert("Cookies must be enabled in your browser. Log in using your account first.");
+        window.location="Page_LogIn.html";
+    }
+    
+    function GoProfile(){
+        window.location="/JCOPOS/Page_Profile.html";
+    }
+    function remove(){
+        Cookies.remove('User');
+        window.location="Page_LogIn.html";
+    }
+    
+    var httpRequest;
+    var start = 0;
+    httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = prepareContent;
+    httpRequest.open("get", "PHP_DisplayMenu.php?Table=Product&rStart="+start);
+    httpRequest.send();
+    start += 5;  
+
+    function makeRequest()
+    {
+        var valueshow = document.getElementById("request").value;
+        //alert("Picked Value: " + valueshow);
+        //SHOW All Products
+        if(valueshow == "Show More"){
+            // alert("yes all");
+            httpRequest = new XMLHttpRequest();
+            
+            if(!httpRequest)
+            {
+                alert("Can't make the request");
+                return false;
+            }
+            
+            httpRequest.onreadystatechange = prepareContent;
+            httpRequest.open("get", "PHP_DisplayMenu.php?Table=Product&rStart="+start);
+            httpRequest.send();
+            start += 5;
+        }
+
+        //SHOW MORE SEarched
+        if(valueshow == "Search Call"){
+            // alert("search yes");
+            // alert(document.getElementById("demo").innerHTML);
+            // alert(start);
+            httpRequest = new XMLHttpRequest();
+
+            if(!httpRequest)
+            {
+                alert("Can't make the request");
+                return false;
+            }
+            var SearchedValue = document.getElementById("Srch").value;
+            httpRequest.onreadystatechange = prepareContent;
+            httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Val="+SearchedValue+"&rStart="+start, true); // this is to set the command to run
+            httpRequest.send();
+            start += 5;
+        }
+
+        if(valueshow == "Category Call"){
+            // alert(document.getElementById("demo").innerHTML);
+            httpRequest = new XMLHttpRequest();
+
+            if(!httpRequest)
+            {
+                alert("Can't make the request");
+                return false;
+            }
+          
+            httpRequest.onreadystatechange = prepareContent;
+            var CatName = document.getElementById("Cat").getAttribute('value');
+            httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Cat="+CatName+"&rStart="+start, true); // this is to set the command to run
+            httpRequest.send();
+            start += 5;
+        }
+
+        if(valueshow == "Category Call2"){
+            // alert(document.getElementById("demo").innerHTML);
+            httpRequest = new XMLHttpRequest();
+
+            if(!httpRequest)
+            {
+                alert("Can't make the request");
+                return false;
+            }
+
+            httpRequest.onreadystatechange = prepareContent;
+            var CatName = document.getElementById("Cat2").getAttribute('value');
+            httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Cat="+CatName+"&rStart="+start, true); // this is to set the command to run
+            httpRequest.send();
+            start += 5;
+        }
+
+        if(valueshow == "Category Call3"){
+            // alert(document.getElementById("demo").innerHTML);
+            httpRequest = new XMLHttpRequest();
+
+            if(!httpRequest)
+            {
+                alert("Can't make the request");
+                return false;
+            }
+            
+            httpRequest.onreadystatechange = prepareContent;
+            var CatName = document.getElementById("Cat3").getAttribute('value');
+            httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Cat="+CatName+"&rStart="+start, true); // this is to set the command to run
+            httpRequest.send();
+            start += 5;
+        }
+
+        if(valueshow == "Category Call4"){
+            // alert(document.getElementById("demo").innerHTML);
+            httpRequest = new XMLHttpRequest();
+
+            if(!httpRequest)
+            {
+                alert("Can't make the request");
+                return false;
+            }
+    
+            httpRequest.onreadystatechange = prepareContent;
+            var CatName = document.getElementById("Cat4").getAttribute('value');
+            httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Cat="+CatName+"&rStart="+start, true); // this is to set the command to run
+            httpRequest.send();
+            start += 5;
+        }
+
+    }
+
+    function SrchCall(){
+        document.getElementById("request").value = "Search Call";
+        document.getElementById("demo").innerHTML = "";
+        start = 0;
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = prepareContent;
+        
+        var SearchedValue = document.getElementById("Srch").value;
+        httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Val="+SearchedValue+"&rStart="+start, true); // this is to set the command to run
+        httpRequest.send();
+        start += 5;
+    }
+
+    function CategoryCall(){
+        document.getElementById("request").value = "Category Call";
+        document.getElementById("demo").innerHTML = "";
+        start = 0;
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = prepareContent;
+        
+        var CatName = document.getElementById("Cat").getAttribute('value');
+        httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Cat="+CatName+"&rStart="+start, true); // this is to set the command to run
+        httpRequest.send();
+        start += 5;
+    }
+    function CategoryCall2(){
+        document.getElementById("request").value = "Category Call2";
+        document.getElementById("demo").innerHTML = "";
+        start = 0;
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = prepareContent;
+        
+        var CatName = document.getElementById("Cat2").getAttribute('value');
+        httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Cat="+CatName+"&rStart="+start, true); // this is to set the command to run
+        httpRequest.send();
+        start += 5;
+    }
+    function CategoryCall3(){
+        document.getElementById("request").value = "Category Call3";
+        document.getElementById("demo").innerHTML = "";
+        start = 0;
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = prepareContent;
+        
+        var CatName = document.getElementById("Cat3").getAttribute('value');
+        httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Cat="+CatName+"&rStart="+start, true); // this is to set the command to run
+        httpRequest.send();
+        start += 5;
+    }
+    function CategoryCall4(){
+        document.getElementById("request").value = "Category Call4";
+        document.getElementById("demo").innerHTML = "";
+        start = 0;
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = prepareContent;
+        
+        var CatName = document.getElementById("Cat4").getAttribute('value');
+        httpRequest.open("GET", "PHP_DisplayMenu.php?Table=Product&Cat="+CatName+"&rStart="+start, true); // this is to set the command to run
+        httpRequest.send();
+        start += 5;
+    }
+   
+
+    function prepareContent()
+    {
+        if(httpRequest.readyState === XMLHttpRequest.DONE)
+        {
+            if(httpRequest.status === 200)
+            {
+                myObj = JSON.parse(httpRequest.responseText);
+                for(var key of Object.keys(myObj))
+                {
+                    var layout = "<ul><li>";
+                    var innerObj = myObj[key];
+                    // alert(key);
+                    //layout += '<span id="iItemNum">'+key+'</span>';
+                    layout += '<span id="iItemName'+key+'">'+innerObj["ProductName"]+'</span>';
+                    layout += '<span id="Price'+key+'" >'+innerObj["Price"]+"</span>";
+                    layout +=' <span><a><i class="fa fa-minus-circle"></i></a> <input class="qty"  id="iQuantity'+key+'" type="text"> <a><i class="fa fa-plus-circle"></i></a></span>';
+                    //layout +='<input class="qty" id="iQuantity'+key+'" type="text">';
+                    layout += '<span><a onClick="insert('+key+')" type="button" id="'+key+'">Add to list <i class="fas fa-plus-square"></i></a></span>';
+                    layout += '</li>';
+
+                    document.getElementById("demo").innerHTML += layout;
+                }
+            }
+            else
+            {
+                alert("Something's wrong here!");
+            }
+        }
+    }
+</script>
+
+<!-- for session storage script -->
+<script>
+
+    function insert(k)
+    {   
+        const iOrder = "Order Details";
+        // const iItemNum = document.getElementById("iItemNum").innerText;
+        const iItemName = document.getElementById("iItemName"+k).innerText;
+        const iQuantity = document.getElementById("iQuantity"+k).value;
+        //const iPrice = document.getElementById("Price"+k).innerText;
+        //const btnInsert = document.getElementById("btnInsert");
+        //var output = document.getElementById("output");
+        var obj = {};
+        //alert("Quantity: "+iQuantity+ " | Name: " +iItemName+ iPrice);
+
+        if(iOrder && iItemName && iQuantity)
+        {
+            if(sessionStorage.getItem(iOrder) === null) 
+            {
+                obj[iItemName] = parseInt(iQuantity);
+                sessionStorage.setItem(iOrder, JSON.stringify(obj));
+            }
+            else 
+            {
+                obj = JSON.parse(sessionStorage.getItem(iOrder));
+                if(obj.hasOwnProperty(iItemName)) 
+                {
+                    obj[iItemName] = parseInt(obj[iItemName]) + parseInt(iQuantity);
+                    // alert("add");
+                }
+                else
+                {
+                    obj[iItemName] = parseInt(iQuantity);
+                }
+                sessionStorage.setItem(iOrder, JSON.stringify(obj));
+            }
+            location.reload();
+        }
+    }
+
+    for(let x = 0; x < sessionStorage.length; x++)
+    {
+        const tNum = sessionStorage.key(x);
+        var pOrder = JSON.parse(sessionStorage.getItem(tNum));
+        // output.innerHTML += "<ul><span>Item Name</span><span>Quantity</span>";
+        //alert("Order: "+tNum);
+        for(o in pOrder)
+        {
+            //alert("Item Name : " + o + " Quantity : " + pOrder[o]);
+            output.innerHTML += "<ul><li><span>"+ o + "</span>"+"<span>"+ pOrder[o] + "</span></li>";
+        }
+        output.innerHTML += "</ul>";
+    }
+    
+</script>

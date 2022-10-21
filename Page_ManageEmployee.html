@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Users</title>
+        <link rel="stylesheet" href="stylemanageemp2.css">
+        <script src="https://kit.fontawesome.com/5112b0baa8.js" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+        <section>
+            <header>
+                <a href="/JCOPOS/Page_Home.html" class="logo"><img src="JCOLogo.png" class="logo"></a>
+                <ul class="head">
+                    <li><a href="/JCOPOS/Page_Home.html">Home</a></li>
+                    <li><a href="/JCOPOS/Page_OurMenu.html">Our Menu</a></li>
+                    <li><a href="/JCOPOS/Page_PlaceOrder.html">Current Order</a></li>    
+                    <li><a href="/JCOPOS/Page_CompletedOrders.html">Completed Orders</a></li>
+                    <li><a href="/JCOPOS/Page_ManageEmployee.html">Users</a></li>
+                </ul>
+                <div class="cornerR">
+                    <a  onclick="GoProfile()" ><button class="profile"><i class="fa fa-user-circle-o"></i> PROFILE</button></a>
+                    <a onclick="remove()"><button class="signout">SIGN OUT  <i class="fa fa-sign-out"></i></button></a>
+                </div>
+            </header>
+        </section>
+        <div class="circle"></div>
+        <div class="circle2"></div>
+        <div class="allcontent">
+            <h1>USER<span> Information</span></h1>
+            <hr class="divider"></hr>
+            <button class="search" type="button" onclick="User()"> ADD NEW USER <i class="fas fa-plus-square"></i></button>
+            <input class="s" type="text" Placeholder= "Search Something" id="Srch">
+            <button class="search" value="Searched" type="button" onclick="return SrchCall()"> <i class="fa fa-search"></i></button>
+            <center>
+                <ul class="thumb">
+                    <li id="Cat" value="2" onclick="CategoryCall()"><i class="fas fa-users fa-3x"></i><h3>Employee</h3></li>
+                    <li id="Cat2" value="1" onclick="CategoryCall2()"><i class="fas fa-users-cog fa-3x"></i><h3>Administrator</h3></li>
+                </ul>
+                <div class="box" id="demo">
+                <!-- <ul> 
+                    <li>
+                        <span>1</span>
+                        <span>Half Dozen</span>
+                        <span>6 of your choice</span>
+                        <span>1</span>
+                        <span>P270</span>
+                    </li>   -->   
+                </ul> 
+            </div>
+            </center>
+        </div>
+    </body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+<script>   
+
+     if(document.cookie.indexOf("User") < 0){
+        alert("Cookies must be enabled in your browser. Log in using your account first.");
+        window.location="Page_LogIn.html";
+    }
+    
+    function GoProfile(){
+        window.location="/JCOPOS/Page_Profile.html";
+    }
+    function remove(){
+        Cookies.remove('User');
+        window.location="Page_LogIn.html";
+    }
+    
+    var xmlhttp = new XMLHttpRequest(); //AJAX statment
+   
+    xmlhttp.onreadystatechange = function() // create a function on the event
+    {
+        if (this.readyState == 4 && this.status == 200) 
+        {
+            myObj = JSON.parse(this.responseText); // this line converts whatever the response is to JSON   
+            
+            var output = "";
+
+            output += "<ul>";
+            for( var key of Object.keys(myObj))
+            {   
+                output += "<li><span>" + key + "</span>"; 
+                // output += "<span>"+myObj[key]["UserID"]+"</span>";
+                output += "<span>"+myObj[key]["LastName"]+"</span>";
+                output += "<span>"+myObj[key]["FirstName"]+"</span>";
+                output+='<span><a onClick="Edit()" ><i class="fas fa-user-edit"></i></a></span>';
+
+                // output += '<td> <button id= "'+ key +'"   value= "'+ key + '" > Update </button></td>';
+                //output += '<td> <button id= "OI" onClick="test1()" value= "'+ key + '" > Order </button></td>';
+                output += '</li>';
+            }
+            document.getElementById("demo").innerHTML = output;
+
+            for(var key of Object.keys(myObj))
+            {
+                document.getElementById(key).onclick = test;
+            } 
+        }
+    };
+
+    xmlhttp.open("GET", "PHP_ConnectionManageEmp.php?Table=User", true); // this is to set the command to run
+    xmlhttp.send();
+
+    function SrchCall(){
+        var SearchedValue = document.getElementById("Srch").value;
+        xmlhttp.open("GET", "PHP_ConnectionManageEmp.php?Table=User&Val="+SearchedValue, true); // this is to set the command to run
+        xmlhttp.send();
+    }
+
+    function CategoryCall(){
+        var CatName = document.getElementById("Cat").getAttribute('value');
+        xmlhttp.open("GET", "PHP_ConnectionManageEmp.php?Table=User&Cat="+CatName, true); // this is to set the command to run
+        xmlhttp.send();
+    }
+    function CategoryCall2(){
+        var CatName = document.getElementById("Cat2").getAttribute('value');
+        xmlhttp.open("GET", "PHP_ConnectionManageEmp.php?Table=User&Cat="+CatName, true); // this is to set the command to run
+        xmlhttp.send();
+    }  
+    function Edit(){
+        window.location="/JCOPOS/Page_EditUser.html"
+    }
+    function User(){
+        window.location ="/JCOPOS/Page_EditUser.html";
+    }
+</script>
